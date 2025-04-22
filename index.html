@@ -1,1 +1,144 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Для Сони</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at center, #1a0025, #000);
+      overflow: hidden;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.5); }
+    }
+
+    .heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      width: 100px;
+      height: 100px;
+      background: #ff4fa1;
+      animation: pulse 1.5s infinite;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 0 30px #ff4fa1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: #ff4fa1;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 50px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
+    }
+
+    .scroll {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #fff0f7;
+      color: #700044;
+      border: 4px solid #ff4fa1;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 400px;
+      text-align: center;
+      font-size: 1.2em;
+      z-index: 3;
+      box-shadow: 0 0 30px rgba(255, 79, 161, 0.6);
+      transition: transform 0.6s ease;
+    }
+
+    .scroll.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .cat {
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 292px); /* ещё левее от сердца */
+    transform: translate(-50%, -50%);
+    width: 260px; /* увеличен размер */
+    z-index: 1;
+    pointer-events: none;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <!-- Котик с прозрачным фоном -->
+  <img src="cat.png" alt="Котик" class="cat">
+
+  <div class="heart" onclick="showLove()"></div>
+
+  <div class="scroll" id="scroll">
+    <h2>Соня, я тебя люблю 💖</h2>
+  </div>
+
+  <script>
+    // Звезды
+    const stars = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDuration = (1 + Math.random() * 2) + 's';
+      stars.appendChild(star);
+    }
+
+    // Показ признания
+    function showLove() {
+      document.getElementById('scroll').classList.add('show');
+    }
+  </script>
+
+</body>
+</html>
