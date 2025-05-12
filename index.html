@@ -1,144 +1,204 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Открытка</title>
+  <title>Люблю</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      background: radial-gradient(ellipse at center, #1a0025, #000);
-      overflow: hidden;
       height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #6e008b, #ff6ec7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      overflow: hidden;
+      position: relative;
     }
 
-    .stars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    .star {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out alternate;
-    }
-
-    @keyframes twinkle {
-      from { opacity: 0.2; transform: scale(1); }
-      to { opacity: 1; transform: scale(1.5); }
+    .heart-container {
+      position: relative;
+      cursor: pointer;
+      z-index: 10;
     }
 
     .heart {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-45deg);
-      width: 100px;
-      height: 100px;
-      background: #ff4fa1;
-      animation: pulse 1.5s infinite;
-      cursor: pointer;
-      z-index: 2;
-      box-shadow: 0 0 30px #ff4fa1;
+      width: 150px;
+      height: 150px;
+      background: red;
+      position: relative;
+      transform: rotate(-45deg);
+      box-shadow: 0 0 15px darkred, 0 5px 30px rgba(255, 0, 0, 0.5);
+      animation: pulse 2s infinite alternate;
     }
 
     .heart::before,
     .heart::after {
       content: '';
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: #ff4fa1;
+      width: 150px;
+      height: 150px;
+      background: red;
       border-radius: 50%;
+      position: absolute;
     }
 
     .heart::before {
-      top: -50px;
+      top: -75px;
       left: 0;
     }
 
     .heart::after {
-      left: 50px;
+      left: 75px;
       top: 0;
     }
 
     @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
-      50% { transform: translate(-50%, -50%) rotate(-45deg) scale(1.1); }
+      0% {
+        box-shadow: 0 0 15px darkred, 0 5px 30px rgba(255, 0, 0, 0.5);
+      }
+      100% {
+        box-shadow: 0 0 25px darkred, 0 20px 60px rgba(139, 0, 0, 0.6);
+      }
     }
 
-    .scroll {
+    .popup {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: #fff0f7;
-      color: #700044;
-      border: 4px solid #ff4fa1;
-      border-radius: 16px;
-      padding: 40px;
-      max-width: 400px;
-      text-align: center;
-      font-size: 1.2em;
-      z-index: 3;
-      box-shadow: 0 0 30px rgba(255, 79, 161, 0.6);
-      transition: transform 0.6s ease;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px black;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.3s ease;
+      pointer-events: none;
     }
 
-    .scroll.show {
-      transform: translate(-50%, -50%) scale(1);
+    .popup.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
     }
 
-    .cat {
-    position: absolute;
-    top: 50%;
-    left: calc(50% - 292px); /* ещё левее от сердца */
-    transform: translate(-50%, -50%);
-    width: 260px; /* увеличен размер */
-    z-index: 1;
-    pointer-events: none;
-  }
+    .popup1 { top: -140px; left: -250px;}
+    .popup2 { top: -120px; right: -260px;}
+    .popup3 { top: 180px; left: -200px;}
+    .popup4 { top: 220px; right: -200px;}
+
+    .drop {
+      position: absolute;
+      width: 8px;
+      height: 18px;
+      background: darkred;
+      border-radius: 50% 50% 60% 60%;
+      opacity: 0.9;
+      animation: fall linear forwards;
+      z-index: 5;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .puddle {
+      position: absolute;
+      background: radial-gradient(ellipse at center, #6b0000 40%, #3a0000 100%);
+      filter: blur(4px);
+      bottom: 10px;
+      border-radius: 60% 40% 70% 50% / 50% 60% 40% 60%;
+      z-index: 1;
+      transition: width 0.3s ease, height 0.3s ease;
+      opacity: 0.75;
+    }
   </style>
 </head>
 <body>
 
-  <div class="stars" id="stars"></div>
+<div class="heart-container" onclick="startBlood()">
+  <div class="heart" id="heart"></div>
+  <div class="popup popup1">Ник, я тебя очень люблю, и хочу чтобы ты была счатлива❤️</div>
+  <div class="popup popup2">Мне намного лучше с тобой❤️</div>
+  <div class="popup popup4">Но, мне кажется я всего лишь мечтаю</div>
+  <div class="popup popup3">Я очень хочу с тобой отношений</div>
+</div>
 
-  <!-- Котик с прозрачным фоном -->
-  <img src="cat.png" alt="Котик" class="cat">
+<div class="puddle" id="puddle"></div>
 
-  <div class="heart" onclick="showLove()"></div>
+<script>
+  let dripping = false;
+  let dropInterval;
+  let puddleSize = 80;
+  const puddleMaxSize = 400;
+  let stopDrip = false;
 
-  <div class="scroll" id="scroll">
-    <h2>Соня, я тебя люблю 💖</h2>
-  </div>
+  // Начало капель, когда нажимают на сердце
+  function startBlood() {
+    document.querySelectorAll('.popup').forEach(p => {
+      p.classList.toggle('show');
+    });
 
-  <script>
-    // Звезды
-    const stars = document.getElementById('stars');
-    for (let i = 0; i < 150; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.animationDuration = (1 + Math.random() * 2) + 's';
-      stars.appendChild(star);
+    if (!dripping && !stopDrip) {
+      dripping = true;
+      startDripping();
+    }
+  }
+
+  // Начало капель
+  function startDripping() {
+    const heartContainer = document.querySelector('.heart-container');
+    const heartRect = heartContainer.getBoundingClientRect();
+
+    dropInterval = setInterval(() => {
+      if (stopDrip) {
+        clearInterval(dropInterval);
+        return;
+      }
+
+      for (let i = 0; i < 3; i++) {
+        const drop = document.createElement('div');
+        drop.classList.add('drop');
+
+        // Позиция капли: начинает с сердца
+        const x = heartRect.left + heartRect.width / 2 - 4 + (Math.random() * 10 - 5); // ±5px от центра
+        const y = heartRect.top + heartRect.height / 2 + Math.random() * 10; // немного ниже центра сердца
+
+        drop.style.left = `${x}px`;
+        drop.style.top = `${y}px`;
+        drop.style.animationDuration = `${1 + Math.random()}s`;
+
+        document.body.appendChild(drop);
+
+        setTimeout(() => {
+          drop.remove();
+          growPuddle();
+        }, 2000);
+      }
+    }, 200);
+  }
+
+  // Увеличение лужи
+  function growPuddle() {
+    const puddle = document.getElementById('puddle');
+    if (puddleSize >= puddleMaxSize) {
+      stopDrip = true;
+      dripping = false;
+      clearInterval(dropInterval);
+      return;
     }
 
-    // Показ признания
-    function showLove() {
-      document.getElementById('scroll').classList.add('show');
-    }
-  </script>
+    puddleSize += 4;
+    puddle.style.width = `${puddleSize}px`;
+    puddle.style.height = `${puddleSize * 0.3}px`;
+    puddle.style.left = `calc(50% - ${puddleSize / 2}px)`;
+  }
+</script>
 
 </body>
 </html>
